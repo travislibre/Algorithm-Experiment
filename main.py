@@ -1,5 +1,29 @@
 from asyncio.windows_events import NULL
 
+class PriorityQueue(object):
+    def __init__(self, nodes):
+        self.queue = nodes
+
+    def make_queue(self):
+        pass
+
+    def delete_min(self, distances):
+        min = self.queue[0]
+        print(distances)
+        for node in self.queue[1:]:
+            if distances[node] < distances[min]:
+                min = node
+        self.queue.remove(min)  # TODO
+        return min
+
+    def is_empty(self):
+        if len(self.queue) == 0:
+            return True
+        else:
+            return False
+
+    def decrease_key(self, v):
+        pass
 
 class Dijkstra:
     def __init__(self, edges, nodes, start):
@@ -10,7 +34,7 @@ class Dijkstra:
         self.distances = {}  # Dictionary that keeps track of the distance from a node to the start node. If it hasnt been visited it is initialized to "INF"
         self.previous = {}  # Dictionary that keep track of previous nodes
         for node in self.nodes:  #
-            self.distances[node] = "INF"
+            self.distances[node] = 1e7
             self.previous[node] = None
         self.distances[start] = 0
         self.H = PriorityQueue(self.nodes)
@@ -41,7 +65,7 @@ class BellmanFord:
         self.distances = {}  # Dictionary that keeps track of the distance from a node to the start node. If it hasnt been visited it is initialized to "INF"
         self.previous = {}  # Dictionary that keep track of previous nodes
         for node in self.nodes:  #
-            self.distances[node] = 10000000
+            self.distances[node] = 1e7
             self.previous[node] = "N"
         self.distances[start] = 0
 
@@ -153,10 +177,10 @@ class Project3Runner:
         ["Prince Center", 80, "Computer Science"]
     ]
 
-
+    '''
     for edge in edges: #Used to reverse edges for edge array
         print('[\"',edge[2],'\", ', edge[1], ', \"',edge[0],'\"],',sep="")
-
+    '''
 
     nodes = ["Computer Science", "College Square", "Lewis Science Center", "Prince Center",
              "Police Dept.", "Student Health Center", "Torreyson Library", "Old Main", "Fine Art",
@@ -185,32 +209,10 @@ class Project3Runner:
     ]
     nodes = ["S", "A", "B", "C", "D", "E", "F", "G", "H", "I"]
     '''
+    dj = Dijkstra(edges.copy(), nodes.copy(), nodes[0])
+    dj.dijkstra()
 
     bf = BellmanFord(edges, nodes, nodes[0])
     bf.bellman_ford()
     bf.print_current_state()
 
-
-class PriorityQueue(object):
-    def __init__(self, nodes):
-        self.queue = nodes
-
-    def make_queue(self):
-        pass
-
-    def delete_min(self, distances):
-        min = node[0]
-        for node in self.queue[1:]:
-            if distances[node] < distances[min]:
-                min = node
-        self.queue.remove(min)  # TODO
-        return min
-
-    def is_empty(self):
-        if len(self.queue) == 0:
-            return True
-        else:
-            return False
-
-    def decrease_key(self, v):
-        pass
